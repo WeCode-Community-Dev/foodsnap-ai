@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Food Image Upload</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    body {
+      margin: 0;
+      background: #e8e8e8;
+      font-family: 'Inter', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #202020;
+    }
+
+    .upload-card {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
+      padding: 32px 40px;
+      width: 100%;
+      max-width: 420px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+
+    .upload-card h1 {
+      margin-bottom: 24px;
+      font-weight: 600;
+      font-size: 1.8rem;
+      letter-spacing: 0.02em;
+      color: #222;
+    }
+
+    .file-input-wrapper {
+      position: relative;
+      margin-bottom: 32px;
+    }
+
+    input[type="file"] {
+      opacity: 0;
+      width: 100%;
+      height: 50px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      cursor: pointer;
+    }
+
+    label[for="id_file"] {
+      display: block;
+      border: 2px dashed #d1d9e6;
+      border-radius: 12px;
+      height: 50px;
+      line-height: 46px;
+      color: #8c95a0;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: border-color 0.3s ease, background-color 0.3s ease;
+      user-select: none;
+    }
+
+    label[for="id_file"]:hover {
+      border-color: #4a90e2;
+      background-color: #f0f5ff;
+      color: #3a70c4;
+    }
+
+    #file-name {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #555;
+      min-height: 20px;
+      word-break: break-word;
+    }
+
+    /* New button styles */
+    .upload-button {
+      position: relative;
+      width: 100%;
+      height: 3rem;
+      cursor: pointer;
+      border: none;
+      background: none;
+      margin-top: 20px;
+    }
+
+    .upload-button svg {
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .border {
+      width: 100%;
+      height: 100%;
+      stroke: #4a90e2;
+      stroke-width: 2px;
+      fill: #0000;
+      rx: 1em;
+      ry: 1em;
+      stroke-dasharray: 25;
+      transition: fill 0.25s;
+      animation: 4s linear infinite stroke-animation;
+    }
+
+    .upload-button:hover .border {
+      fill: #4a90e211;
+    }
+
+    .upload-button:focus .border {
+      transition: fill 0.25s 7.75s;
+      fill: #0000;
+    }
+
+    @keyframes stroke-animation {
+      0% {
+        stroke-dashoffset: 100;
+      }
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    .txt-upload {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: #4a90e2;
+    }
+
+    .txt-upload::after {
+      content: "Upload";
+    }
+
+    .upload-button:focus .rect {
+      stroke-dasharray: 50;
+    }
+    .upload-button:focus .border {
+      stroke: #0000;
+    }
+
+    .upload-button:focus .txt-upload {
+      opacity: 0;
+      transition: opacity 0.25s 8s;
+    }
+
+    .upload-button:focus .txt-upload::after {
+      animation: 0.66666s anim step-end forwards,
+        1.33333s 0.6666s anim2 linear infinite alternate;
+    }
+
+    @keyframes anim {
+      0% {
+        content: "U";
+      }
+      50% {
+        content: "Up";
+      }
+      to {
+        content: "Upl";
+      }
+    }
+
+    @keyframes anim2 {
+      0% {
+        content: "Upl";
+      }
+      33% {
+        content: "Upl.";
+      }
+      66% {
+        content: "Upl..";
+      }
+      to {
+        content: "Upl...";
+      }
+    }
+
+    .loading {
+      width: 100%;
+      height: 100%;
+      stroke: #0055d4;
+      stroke-width: 2px;
+      fill: none;
+      rx: 1em;
+      ry: 1em;
+      stroke-dasharray: 0 100;
+    }
+
+    .upload-button:focus .loading {
+      transition: stroke 0.5s 7.5s, stroke-dasharray 8s 0.5s ease-out;
+      stroke: #08ca08;
+      stroke-dasharray: 100 0;
+    }
+
+    .done {
+      fill: none;
+      stroke: #000;
+      stroke-dasharray: 0 100;
+    }
+
+    .upload-button:focus .done-cloud {
+      transition: stroke-dasharray 0.75s 8.5s ease-out;
+      stroke-dasharray: 100 0;
+    }
+
+    .upload-button:focus .done-check {
+      transition: stroke-dasharray 0.5s 9.2s ease-out;
+      stroke: #08ca08;
+      stroke-dasharray: 100 0;
+    }
+
+    @media (max-width: 480px) {
+      .upload-card {
+        padding: 24px 20px;
+      }
+
+      label[for="id_file"] {
+        height: 44px;
+        line-height: 40px;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="upload-card">
+    <h1>Upload Food Image</h1>
+    <form method="post" enctype="multipart/form-data" id="upload-form">
+      {% csrf_token %}
+      <div class="file-input-wrapper">
+        {{ form.file }}
+        <label for="id_file">Choose Image</label>
+      </div>
+      <div id="file-name"></div>
+
+      <button type="submit" class="upload-button" id="upload-btn" disabled>
+        <svg>
+          <rect class="border"></rect>
+          <rect class="loading"></rect>
+          <g class="done">
+            <rect class="done-cloud"></rect>
+            <path class="done-check" d="M10 20 l5 5 l10 -15"></path>
+          </g>
+        </svg>
+        <div class="txt-upload"></div>
+      </button>
+    </form>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById('id_file');
+    const fileName = document.getElementById('file-name');
+    const uploadBtn = document.getElementById('upload-btn');
+    const form = document.getElementById('upload-form');
+
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length > 0) {
+        fileName.textContent = fileInput.files[0].name;
+        uploadBtn.disabled = false;
+      } else {
+        fileName.textContent = '';
+        uploadBtn.disabled = true;
+      }
+    });
+
+    form.addEventListener('submit', () => {
+      uploadBtn.disabled = true;
+      uploadBtn.focus(); // Trigger the button animation
+    });
+  </script>
+</body>
+
+</html>
