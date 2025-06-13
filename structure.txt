@@ -1,0 +1,8 @@
+/foodsnap-ai-project
+│
+├── train_model.py        
+├── foodsnap_resnet50.h5   
+└── /data              
+    └── /food-101
+        └── /images
+            └── /apple_pie, /baklava, ...
